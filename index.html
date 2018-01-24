@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+	<head>
+		<title>我想对你说</title>
+		<meta charset="utf-8">
+		<meta name="format-detection" content="telephone=no" />
+		<meta name="x5-orientation" content="portrait" />
+		<script src="https://res.wx.qq.com/open/js/jweixin-1.2.0.js"></script>
+		<script>
+			var scale = (1 / window.devicePixelRatio).toFixed(4);
+			document.write('<meta class="meta-viewport" name="viewport" content="width=device-width,initial-scale='+scale+',minimum-scale='+scale+',maximum-scale='+scale+',user-scalable=no" />');
+			var html = document.getElementsByTagName('html')[0];
+			var pageHeight = Math.max(html.getBoundingClientRect().height, window.innerHeight);
+			var pageWidth = Math.max(html.getBoundingClientRect().width, window.innerWidth);
+			var UA=window.navigator.userAgent.toLowerCase();
+			var isPC=false;
+			// if(移动端or屏幕宽高比为竖屏) ==> 取屏幕宽度÷7.5计算font-size
+			if((UA.indexOf('mobile')>-1 || UA.indexOf('android')>-1 || UA.indexOf('ucweb')>-1) && pageWidth/pageHeight<=0.75){
+				html.style.fontSize = pageWidth/7.5 + 'px'
+			} else {
+				// 否则(PC浏览器中) ==> 取屏幕高度计算9/16,再÷7.5计算font-size
+				window.isPC=true;
+				html.style.fontSize = pageHeight*9/16/7.5+'px';
+			}
+		</script>
+		<script>
+			// 禁止微信分享
+			window.weixinShare={};
+			window.weixinShare.shareDeny = function() {
+				//禁止分享配置
+				wx.config({
+					debug: false,
+					appId: 'wx0cad77c43b1d74ce',
+					timestamp: 123123213,
+					nonceStr: '123123123',
+					signature: '123123123',
+					jsApiList: [
+						'hideOptionMenu',
+					]
+				});
+				wx.ready(function() {
+					wx.checkJsApi({
+						jsApiList: [
+							'hideOptionMenu',
+						]
+					});
+					wx.hideOptionMenu();
+				});
+			}
+		</script>
+		<style>
+			.pc {
+				position: relative;
+				height: 100%;
+				margin: 0 auto;
+			}
+			.abs {
+				position: absolute;
+				z-index: 1;
+			}
+			.rel {
+				position: relative;
+			}
+			.full {
+				width: 100%;
+				height: 100%;
+			}
+			.overflow-hidden {
+				overflow: hidden;
+			}
+			.overflow-x-hidden {
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+			.break {
+				word-break: break-all;
+				word-wrap: break-word;
+			}
+			html,body{
+				margin: 0;
+				padding: 0;
+				width: 100%;
+				height: 100%;
+				overflow: hidden;
+				background: #fff;
+			}
+			body {
+				font-size: 0.5rem;
+			}
+			#webapp_container {
+				height: 100%;
+				overflow-x: hidden;
+				overflow-y: auto;
+			}
+		</style>
+	</head>
+	<body>
+		<div id="webapp_container">
+			<div id="app"></div>
+			<!-- built files will be auto injected -->
+		</div>
+		<script>
+			window.onload=function(){
+				!function(){
+					if(window.isPC){
+						var webapp=document.getElementById('webapp_container');
+						webapp.className="pc";
+						var width=window.pageHeight*9/16+'px';
+						webapp.style.width=width;
+					}
+				}();
+			}
+		</script>
+	</body>
+</html>
